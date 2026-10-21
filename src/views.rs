@@ -38,6 +38,8 @@ pub struct Listing<'a> {
     pub order: Order,
 }
 
+const DOWNLOAD_ICON: &str = r#"<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>"#;
+
 // Applies the saved theme before first paint (no flash).
 const THEME_INIT: &str = "try{var t=localStorage.getItem('rsrvdir-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}";
 
@@ -156,7 +158,9 @@ pub fn listing(site: &Site, l: &Listing) -> Markup {
                             td.date { (DateTime::<Local>::from(e.modified).format("%Y-%m-%d %H:%M")) }
                             td.dl {
                                 @if !e.is_dir {
-                                    a href={ (href) "?download" } download title={ "Download " (e.name) } aria-label={ "Download " (e.name) } { "⬇" }
+                                    a.button href={ (href) "?download" } download aria-label={ "Download " (e.name) } {
+                                        (PreEscaped(DOWNLOAD_ICON)) span.label { "Download" }
+                                    }
                                 }
                             }
                         }

@@ -310,21 +310,36 @@ th.date {
 }
 
 .dl {
-  width: 3rem;
-  text-align: center;
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  /* button must not make file rows taller than folder rows */
+  padding-block: 0;
 }
 
-.dl a {
-  display: inline-block;
-  padding: 0 var(--size-2);
+a.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
+  padding: var(--size-1) var(--size-2);
+  border: 1px solid var(--border);
   border-radius: var(--radius-2);
+  background: var(--select-bg);
   color: var(--accent);
-  font-weight: var(--font-weight-7);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  line-height: 1;
 }
 
-.dl a:hover {
+a.button:hover {
+  border-color: var(--accent);
   background: var(--header-bg);
   text-decoration: none;
+}
+
+a.button svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .visually-hidden {
@@ -377,7 +392,8 @@ td a:hover {
 
   .site-title,
   .theme-switcher label,
-  .date {
+  .date,
+  a.button .label {
     display: none;
   }
 
