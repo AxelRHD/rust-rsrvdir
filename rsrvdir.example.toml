@@ -1,0 +1,21 @@
+# rsrvdir --config rsrvdir.toml
+listen = "0.0.0.0:8090"
+title = "Files"
+theme = "nord"                       # auto, nord, squirrel, archlinux, monokai, zenburn
+# auth_file = "/path/to/.htpasswd"   # optional Basic Auth (rsrvdir htpasswd FILE USER)
+
+[[share]]
+name = "reports"                     # served under /reports/
+path = "/srv/reports"
+description = "Generated reports"
+allow = ["*.pdf", "*.xlsx"]          # only these files (any depth); empty = all files
+hide = ["tmp"]                       # never listed or served (files and folders)
+sort = "time"                        # name | size | time
+order = "desc"                       # asc | desc
+download = true                      # click downloads instead of opening in the browser
+# charset = "windows-1252"           # added to text/* responses
+
+[[share]]
+name = "logs"
+path = "/var/log/myapp"
+allow = ["*/app_*.log"]              # patterns with '/' match the path relative to the share

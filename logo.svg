@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="480" height="120">
+  <defs>
+    <linearGradient id="folder-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ebcb8b"/>
+      <stop offset="100%" style="stop-color:#d08770"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Folder icon -->
+  <path d="M8 18 L8 45 L52 45 L52 22 L30 22 L26 18 Z" fill="url(#folder-grad)" stroke="#bf616a" stroke-width="1.5"/>
+
+  <!-- File icons inside folder -->
+  <rect x="14" y="26" width="12" height="15" rx="1" fill="#eceff4" stroke="#4c566a" stroke-width="0.8"/>
+  <line x1="16" y1="30" x2="24" y2="30" stroke="#5e81ac" stroke-width="1"/>
+  <line x1="16" y1="33" x2="22" y2="33" stroke="#5e81ac" stroke-width="1"/>
+  <line x1="16" y1="36" x2="24" y2="36" stroke="#5e81ac" stroke-width="1"/>
+
+  <rect x="30" y="26" width="12" height="15" rx="1" fill="#eceff4" stroke="#4c566a" stroke-width="0.8"/>
+  <line x1="32" y1="30" x2="40" y2="30" stroke="#a3be8c" stroke-width="1"/>
+  <line x1="32" y1="33" x2="38" y2="33" stroke="#a3be8c" stroke-width="1"/>
+  <line x1="32" y1="36" x2="40" y2="36" stroke="#a3be8c" stroke-width="1"/>
+
+  <!-- Arrow (serving) -->
+  <path d="M58 32 L75 32 M69 26 L76 32 L69 38" stroke="#8fbcbb" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Browser window -->
+  <rect x="82" y="12" width="40" height="36" rx="4" fill="#2e3440" stroke="#4c566a" stroke-width="1.5"/>
+  <circle cx="89" cy="18" r="2" fill="#bf616a"/>
+  <circle cx="96" cy="18" r="2" fill="#ebcb8b"/>
+  <circle cx="103" cy="18" r="2" fill="#a3be8c"/>
+  <rect x="86" y="24" width="32" height="20" fill="#3b4252"/>
+  <line x1="89" y1="29" x2="112" y2="29" stroke="#88c0d0" stroke-width="1.5"/>
+  <line x1="89" y1="34" x2="108" y2="34" stroke="#5e81ac" stroke-width="1"/>
+  <line x1="89" y1="38" x2="115" y2="38" stroke="#5e81ac" stroke-width="1"/>
+
+  <!-- Text -->
+  <text x="130" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="600">
+    <tspan fill="#88c0d0">r</tspan><tspan fill="#eceff4">srvdir</tspan>
+  </text>
+</svg>
