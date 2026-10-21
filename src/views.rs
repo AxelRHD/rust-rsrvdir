@@ -49,7 +49,7 @@ fn page(site: &Site, title: &str, body: Markup) -> Markup {
                 meta charset="utf-8";
                 meta name="viewport" content="width=device-width, initial-scale=1";
                 title { (title) }
-                link rel="icon" href="/_rsrvdir/logo.svg";
+                link rel="icon" href="/_rsrvdir/icon.svg";
                 link rel="stylesheet" href="/_rsrvdir/open-props.min.css";
                 link rel="stylesheet" href="/_rsrvdir/style.css";
                 script { (PreEscaped(THEME_INIT)) }
@@ -57,7 +57,7 @@ fn page(site: &Site, title: &str, body: Markup) -> Markup {
             }
             body {
                 nav {
-                    a.brand href="/" { img src="/_rsrvdir/logo.svg" alt="rsrvdir" height="32"; }
+                    a.brand href="/" { img src="/_rsrvdir/icon.svg" alt="rsrvdir" height="24"; }
                     span.site-title { (site.title) }
                     (theme_switcher(site.theme))
                 }
@@ -131,12 +131,13 @@ pub fn listing(site: &Site, l: &Listing) -> Markup {
                         (sort_header(l, SortKey::Name, "Name", "name"))
                         (sort_header(l, SortKey::Size, "Size", "size"))
                         (sort_header(l, SortKey::Time, "Modified", "date"))
+                        th.dl { span.visually-hidden { "Download" } }
                     }
                 }
                 tbody {
                     @if !segments.is_empty() || site.has_index {
                         tr {
-                            td.name.parent colspan="3" { span.icon { "⬆️" } a href=".." { ".." } }
+                            td.name.parent colspan="4" { span.icon { "⬆️" } a href=".." { ".." } }
                         }
                     }
                     @for e in l.entries {
@@ -153,10 +154,15 @@ pub fn listing(site: &Site, l: &Listing) -> Markup {
                                 td.size { (format_size(e.size)) }
                             }
                             td.date { (DateTime::<Local>::from(e.modified).format("%Y-%m-%d %H:%M")) }
+                            td.dl {
+                                @if !e.is_dir {
+                                    a href={ (href) "?download" } download title={ "Download " (e.name) } aria-label={ "Download " (e.name) } { "⬇" }
+                                }
+                            }
                         }
                     }
                     @if l.entries.is_empty() {
-                        tr { td.empty colspan="3" { "Empty folder" } }
+                        tr { td.empty colspan="4" { "Empty folder" } }
                     }
                 }
             }
@@ -183,9 +189,12 @@ fn breadcrumbs(site: &Site, share: &Share, segments: &[&str]) -> Markup {
         .collect();
     html! {
         div.breadcrumbs {
-            @if site.has_index {
+            // "~" = start page, or the served folder itself in single-folder mode
+            @if site.has_index || last > 0 {
                 a.crumb.root href="/" { "~" }
                 span.separator { "/" }
+            } @else if share.name.is_empty() {
+                span.crumb.current { "~" }
             }
             @if !share.name.is_empty() {
                 @if last == 0 {

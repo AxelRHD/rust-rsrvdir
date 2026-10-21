@@ -129,6 +129,7 @@ body {
 nav {
   display: flex;
   align-items: center;
+  line-height: 1;
   gap: var(--size-3);
   padding: var(--size-2) var(--size-5);
   border-bottom: 1px solid var(--border);
@@ -137,6 +138,7 @@ nav {
 
 .brand {
   display: flex;
+  align-items: center;
 }
 
 .brand img {
@@ -280,7 +282,7 @@ tbody tr:hover td {
 }
 
 .name {
-  width: 55%;
+  width: 52%;
   word-break: break-all;
 }
 
@@ -292,7 +294,7 @@ tbody tr:hover td {
 }
 
 .date {
-  width: 30%;
+  width: 28%;
   text-align: right;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
@@ -305,6 +307,33 @@ tbody tr:hover td {
 th.size,
 th.date {
   text-align: right;
+}
+
+.dl {
+  width: 3rem;
+  text-align: center;
+}
+
+.dl a {
+  display: inline-block;
+  padding: 0 var(--size-2);
+  border-radius: var(--radius-2);
+  color: var(--accent);
+  font-weight: var(--font-weight-7);
+}
+
+.dl a:hover {
+  background: var(--header-bg);
+  text-decoration: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .empty {

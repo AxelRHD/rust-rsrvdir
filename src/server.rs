@@ -78,7 +78,7 @@ async fn asset(Path(file): Path<String>) -> Response {
             include_bytes!("../assets/alpine.min.js"),
             "text/javascript; charset=utf-8",
         ),
-        "logo.svg" => (include_bytes!("../logo.svg"), "image/svg+xml"),
+        "icon.svg" => (include_bytes!("../assets/icon.svg"), "image/svg+xml"),
         _ => return StatusCode::NOT_FOUND.into_response(),
     };
     (
@@ -163,7 +163,13 @@ async fn serve(State(app): State<Arc<App>>, req: Request) -> Response {
         if !share.is_allowed_file(&rel) {
             return not_found();
         }
-        send_file(share, &real, &rel, req).await
+        // ?download forces an attachment (download button), otherwise per share
+        let download = share.download
+            || req
+                .uri()
+                .query()
+                .is_some_and(|q| q.split('&').any(|kv| kv == "download"));
+        send_file(share, download, &real, &rel, req).await
     }
 }
 
@@ -204,7 +210,13 @@ async fn list_dir(
     views::listing(&app.site(), &l).into_response()
 }
 
-async fn send_file(share: &Share, file: &std::path::Path, rel: &str, req: Request) -> Response {
+async fn send_file(
+    share: &Share,
+    download: bool,
+    file: &std::path::Path,
+    rel: &str,
+    req: Request,
+) -> Response {
     let mut mime = mime_guess::from_path(file).first_or_octet_stream();
     if let (Some(cs), "text") = (&share.charset, mime.type_().as_str())
         && let Ok(m) = format!("{}; charset={cs}", mime.essence_str()).parse()
@@ -215,7 +227,7 @@ async fn send_file(share: &Share, file: &std::path::Path, rel: &str, req: Reques
         Ok(r) => r.map(Body::new),
         Err(e) => match e {},
     };
-    if share.download && res.status().is_success() {
+    if download && res.status().is_success() {
         let name = rel.rsplit('/').next().unwrap_or(rel);
         let ascii: String = name
             .chars()
